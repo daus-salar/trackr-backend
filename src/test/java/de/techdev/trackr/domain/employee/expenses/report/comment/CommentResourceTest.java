@@ -2,11 +2,14 @@ package de.techdev.trackr.domain.employee.expenses.report.comment;
 
 import de.techdev.trackr.domain.AbstractDomainResourceTest;
 import de.techdev.trackr.domain.employee.expenses.reports.comments.Comment;
+
 import org.junit.Test;
 
 import javax.json.stream.JsonGenerator;
+
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import static de.techdev.trackr.domain.DomainResourceTestMatchers.isCreated;
 import static de.techdev.trackr.domain.DomainResourceTestMatchers.isForbidden;
@@ -54,7 +57,7 @@ public class CommentResourceTest extends AbstractDomainResourceTest<Comment> {
     protected String getJsonRepresentation(Comment comment) {
         StringWriter writer = new StringWriter();
         JsonGenerator jg = jsonGeneratorFactory.createGenerator(writer);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter sdf = DateTimeFormatter.ISO_INSTANT;
         jg.writeStartObject()
                 .write("text", comment.getText())
                 .write("employee", "/employees/" + comment.getEmployee().getId())

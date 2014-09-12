@@ -23,7 +23,7 @@ public class InvoiceEventHandlerTest {
     public void testSetInvoiceStateIfNecessaryOverdue() throws Exception {
         Invoice invoice = new Invoice();
         LocalDate dueDate = LocalDate.of(2013, 10, 1);
-        invoice.setDueDate(LocalDateUtil.fromLocalDate(dueDate));
+        invoice.setDueDate(dueDate);
         invoiceEventHandler.setInvoiceStateIfNecessary(invoice);
         assertThat(invoice.getInvoiceState(), is(Invoice.InvoiceState.OVERDUE));
     }
@@ -32,7 +32,7 @@ public class InvoiceEventHandlerTest {
     public void testSetInvoiceStateIfNecessaryOutstanding() throws Exception {
         Invoice invoice = new Invoice();
         LocalDate dueDate = LocalDate.now().plusDays(7);
-        invoice.setDueDate(LocalDateUtil.fromLocalDate(dueDate));
+        invoice.setDueDate(dueDate);
         invoiceEventHandler.setInvoiceStateIfNecessary(invoice);
         assertThat(invoice.getInvoiceState(), is(Invoice.InvoiceState.OUTSTANDING));
     }
@@ -43,10 +43,10 @@ public class InvoiceEventHandlerTest {
         Company company = new Company();
         company.setTimeForPayment(14);
         invoice.setDebitor(company);
-        invoice.setCreationDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 1)));
+        invoice.setCreationDate(LocalDate.of(2014, 1, 1));
 
         invoiceEventHandler.setDueDateFromTimeForPayment(invoice);
-        assertThat(invoice.getDueDate(), is(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 15))));
+        assertThat(invoice.getDueDate(), is(LocalDate.of(2014, 1, 15)));
     }
 
     @Test
@@ -55,17 +55,17 @@ public class InvoiceEventHandlerTest {
         Company company = new Company();
         company.setTimeForPayment(14);
         invoice.setDebitor(company);
-        invoice.setCreationDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 1)));
-        invoice.setDueDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 2)));
+        invoice.setCreationDate(LocalDate.of(2014, 1, 1));
+        invoice.setDueDate(LocalDate.of(2014, 1, 2));
 
         invoiceEventHandler.setDueDateFromTimeForPayment(invoice);
-        assertThat(invoice.getDueDate(), is(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 2))));
+        assertThat(invoice.getDueDate(), is(LocalDate.of(2014, 1, 2)));
     }
 
     @Test
     public void testSetDueDateFromTimeForPaymentDontFailOnNoDebitor() throws Exception {
         Invoice invoice = new Invoice();
-        invoice.setCreationDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 1)));
+        invoice.setCreationDate(LocalDate.of(2014, 1, 1));
         invoiceEventHandler.setDueDateFromTimeForPayment(invoice);
     }
 
@@ -74,7 +74,7 @@ public class InvoiceEventHandlerTest {
         Invoice invoice = new Invoice();
         Company company = new Company();
         invoice.setDebitor(company);
-        invoice.setCreationDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 1)));
+        invoice.setCreationDate(LocalDate.of(2014, 1, 1));
 
         invoiceEventHandler.setDueDateFromTimeForPayment(invoice);
     }
@@ -85,10 +85,10 @@ public class InvoiceEventHandlerTest {
         Company company = new Company();
         company.setTimeForPayment(14);
         invoice.setDebitor(company);
-        invoice.setCreationDate(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 1)));
+        invoice.setCreationDate(LocalDate.of(2014, 1, 1));
 
         invoiceEventHandler.authorizeCreate(invoice);
-        assertThat(invoice.getDueDate(), is(LocalDateUtil.fromLocalDate(LocalDate.of(2014, 1, 15))));
+        assertThat(invoice.getDueDate(), is(LocalDate.of(2014, 1, 15)));
         assertThat(invoice.getInvoiceState(), is(Invoice.InvoiceState.OVERDUE));
     }
 }
