@@ -33,7 +33,7 @@ public class DeactivateEmployeesService {
      */
     @Transactional
     public void deactivateEmployeesWithLeaveDateToday() {
-        List<Employee> employeesToDeactivate = employeeRepository.findByLeaveDateAndCredential_Enabled(LocalDateUtil.fromLocalDate(LocalDate.now()), true);
+        List<Employee> employeesToDeactivate = employeeRepository.findByLeaveDateAndCredential_Enabled(LocalDate.now(), true);
         employeesToDeactivate.forEach(employee -> {
             log.info("Deactivating employee {}", employee);
             employee.getCredential().setEnabled(false);

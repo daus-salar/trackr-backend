@@ -1,10 +1,12 @@
 package de.techdev.trackr.domain.scheduling;
 
 import de.techdev.trackr.domain.common.FederalState;
+import de.techdev.trackr.domain.employee.vacation.Holiday;
 import de.techdev.trackr.domain.employee.vacation.HolidayRepository;
 import de.techdev.trackr.util.LocalDateUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
@@ -44,8 +46,8 @@ public class LastWorkdayDayOfMonthTrigger implements Trigger {
         LocalDate firstDayOfMonth = month.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate lastDayOfMonth = month.with(TemporalAdjusters.lastDayOfMonth());
         return holidayRepository
-                .findByFederalStateAndDayBetween(state, fromLocalDate(firstDayOfMonth), fromLocalDate(lastDayOfMonth))
-                .stream().map(holiday -> fromDate(holiday.getDay()))
+        		.findByFederalStateAndDayBetween(state, firstDayOfMonth, lastDayOfMonth)
+                .stream().map(Holiday::getDay)
                 .collect(Collectors.toList());
     }
 
