@@ -1,4 +1,4 @@
-package de.techdev.trackr.domain.project.worktimes;
+package de.techdev.trackr.domain.converter;
 
 import java.sql.Time;
 import java.time.LocalTime;

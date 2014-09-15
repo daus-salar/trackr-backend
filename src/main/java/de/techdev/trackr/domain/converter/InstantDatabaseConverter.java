@@ -1,4 +1,4 @@
-package de.techdev.trackr.domain.employee.expenses.reports.comments;
+package de.techdev.trackr.domain.converter;
 
 import java.sql.Timestamp;
 import java.time.Instant;
